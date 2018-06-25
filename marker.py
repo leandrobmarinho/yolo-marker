@@ -178,13 +178,11 @@ if __name__ == '__main__':
     ap.add_argument('-d', '--dimension', nargs=2, help='Max width and height to show the image', required=True, type=int)
     args = vars(ap.parse_args())
 
-    imgs_path = args['path']
-
     MAX_WIDTH = args['dimension'][0]
     MAX_HEIGHT = args['dimension'][1]
 
     # Image path list
-    files = glob.glob('{}*.jpg'.format(imgs_path))
+    files = glob.glob(args['path'])
     NUM_IMGS = len(files)
 
     if not NUM_IMGS:
