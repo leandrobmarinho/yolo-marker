@@ -3,3 +3,7 @@ lib/
 include/
 .idea/workspace.xml
 pip-selfcheck.json
+.idea/misc.xml
+.idea/modules.xml
+.idea/vcs.xml
+.idea/yolo-marker.iml

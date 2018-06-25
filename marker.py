@@ -175,13 +175,13 @@ if __name__ == '__main__':
     # construct the argument parser and parse the arguments
     ap = argparse.ArgumentParser()
     ap.add_argument("-p", "--path", required=True, help="Path to the image", type=str)
-    ap.add_argument('-d', '--dimension', nargs='2', help='Max width and height to show the image', required=True)
+    ap.add_argument('-d', '--dimension', nargs=2, help='Max width and height to show the image', required=True, type=int)
     args = vars(ap.parse_args())
 
     imgs_path = args['path']
 
-    # TODO pass MAX_WIDTH and MAX_HEIGHT by argparse
-
+    MAX_WIDTH = args['dimension'][0]
+    MAX_HEIGHT = args['dimension'][1]
 
     # Image path list
     files = glob.glob('{}*.jpg'.format(imgs_path))
