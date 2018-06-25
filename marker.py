@@ -1,5 +1,5 @@
 # import the necessary packages
-import cv2, glob, os, argparse
+import cv2, glob, os, argparse, math
 
 # initialize the list of reference points and boolean indicating
 # whether cropping is being performed or not
@@ -9,6 +9,8 @@ class_selected = 0
 regions = list()
 file_pos = 0
 NUM_IMGS = 0
+MAX_WIDTH = 1280
+MAX_HEIGHT = 800
 
 class_colours = [(58,36,170), (218,135,9), (166,206,227), (31,120,180), (178,223,138), (51,160,44), (251,154,153), (227,26,28), (253,191,111),
                  (255,127,0)]
@@ -104,14 +106,20 @@ def read_markers(image_path, dimensions):
 
 
 def read_img(file_path):
+    global MAX_WIDTH, MAX_HEIGHT
     image = cv2.imread(file_path)
     dimensions = image.shape
     print('{} {}'.format(file_path, dimensions))
 
-    # TODO Resize the image automatically according to the resolution of the computer
-    if dimensions[1] > 1000:
-        image = cv2.resize(image, None, fx=1 / 2, fy=1 / 2, interpolation=cv2.INTER_CUBIC)
-        dimensions = image.shape
+    if dimensions[1] > MAX_WIDTH or dimensions[0] > MAX_HEIGHT:
+        if math.ceil(dimensions[1] / MAX_WIDTH) > math.ceil(dimensions[0] / MAX_HEIGHT):
+            denominator = math.ceil(dimensions[1] / MAX_WIDTH)
+        else:
+            denominator = math.ceil(dimensions[0] / MAX_HEIGHT)
+
+        image = cv2.resize(image, None, fx=1 / denominator, fy=1 / denominator, interpolation=cv2.INTER_CUBIC)
+        print("New dimension {}".format(image.shape))
+
 
     cv2.namedWindow("image")
     cv2.setMouseCallback("image", click_and_crop)
@@ -167,9 +175,13 @@ if __name__ == '__main__':
     # construct the argument parser and parse the arguments
     ap = argparse.ArgumentParser()
     ap.add_argument("-p", "--path", required=True, help="Path to the image", type=str)
+    ap.add_argument('-d', '--dimension', nargs='2', help='Max width and height to show the image', required=True)
     args = vars(ap.parse_args())
 
     imgs_path = args['path']
+
+    # TODO pass MAX_WIDTH and MAX_HEIGHT by argparse
+
 
     # Image path list
     files = glob.glob('{}*.jpg'.format(imgs_path))
