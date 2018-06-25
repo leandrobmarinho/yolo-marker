@@ -19,7 +19,7 @@ source bin/activate
 pip install -r requirements.txt
 
 ### Run the application
-python3 marker.py -p 'path/with/imgs_in_jpg'
+python3 marker.py -p <PATH_WITH_IMGS_IN_JPG>
 
 #### If you are done working in the virtual environment for the moment, you can deactivate it:
 deactivate
