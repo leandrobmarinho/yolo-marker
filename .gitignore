@@ -1,0 +1,5 @@
+bin/
+lib/
+include/
+.idea/workspace.xml
+pip-selfcheck.json
