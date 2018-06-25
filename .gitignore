@@ -1,3 +1,4 @@
+imgs/*.txt
 bin/
 lib/
 include/
@@ -7,3 +8,4 @@ pip-selfcheck.json
 .idea/modules.xml
 .idea/vcs.xml
 .idea/yolo-marker.iml
+.DS_Store
