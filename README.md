@@ -1,5 +1,7 @@
 ## Yolo marker
 
+![](screen.png?raw=true)
+
 ### Install virtualenv via pip:
 pip install virtualenv
 
@@ -23,3 +25,4 @@ python3 marker.py -p <PATH_WITH_IMGS_IN_JPG>
 
 #### If you are done working in the virtual environment for the moment, you can deactivate it:
 deactivate
+
