@@ -26,3 +26,8 @@ python3 marker.py -p \"PATH_WITH_IMGS/*EXTENSION\" -d WIDTH HEIGHT
 #### If you are done working in the virtual environment for the moment, you can deactivate it:
 deactivate
 
+
+## .txt files for Yolo train
+
+### Run the script to generate the txt files
+python write_img_names.py -p PATH_IMAGES -ptrain [0..1] [-v]
