@@ -59,8 +59,8 @@ def save_regions(image_path, regions, dimensions):
             height = region['region'][1][1] - region['region'][0][1]
             Yolo_x = (region['region'][0][0] + (weight/2)) / weight_img
             Yolo_y = (region['region'][0][1] + (height/2)) / height_img
-            Yolo_weight = weight / weight_img
-            Yolo_height = height / height_img
+            Yolo_weight = abs(weight / weight_img)
+            Yolo_height = abs(height / height_img)
 
             print('{} {:6f} {:6f} {:6f} {:6f}'.format(region['class'], Yolo_x, Yolo_y, Yolo_weight, Yolo_height))
             # print('<{} {} {} {} {}>'.format(region['class'], (region['region'][0][0] + (weight/2)), (region['region'][0][1] + (height/2)), weight, height))
