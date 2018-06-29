@@ -1,3 +1,5 @@
 .*
 imgs/*.txt
 pip-selfcheck.json
+test.txt
+train.txt
