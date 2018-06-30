@@ -45,7 +45,10 @@ def draw_info(image):
 
 def save_regions(image_path, regions, dimensions):
     # Replace jpg path to read txt file
-    file_path = image_path.replace("jpg", "txt")
+
+    filename, file_extension = os.path.splitext(image_path)
+
+    file_path = image_path.replace(file_extension, ".txt")
 
     weight_img = dimensions[1]
     height_img = dimensions[0]
@@ -73,8 +76,10 @@ def save_regions(image_path, regions, dimensions):
 def read_markers(image_path, dimensions):
     global regions
 
+    filename, file_extension = os.path.splitext(image_path)
+
     # Replace jpg path to read txt file
-    file_path = image_path.replace("jpg", "txt")
+    file_path = image_path.replace(file_extension, ".txt")
 
     if os.path.isfile(file_path):
         regions = list()
@@ -232,7 +237,10 @@ if __name__ == '__main__':
             print('Cleaning regions')
             regions = list()
 
-            file_path = files[file_pos].replace("jpg", "txt")
+            filename, file_extension = os.path.splitext(files[file_pos])
+            file_path = files[file_pos].replace(file_extension, ".txt")
+            # file_path = files[file_pos].replace("jpg", "txt")
+
             if os.path.isfile(file_path):
                 os.remove(file_path)
 
