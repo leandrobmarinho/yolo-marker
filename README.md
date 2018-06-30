@@ -30,4 +30,4 @@ deactivate
 ## .txt files for Yolo train
 
 ### Run the script to generate the txt files
-python write_img_names.py -p PATH_IMAGES -ptrain [0..1] [-v]
+python write_img_names.py -p \"PATH_WITH_IMGS/*EXTENSION\" -ptrain [0..1] [-v]

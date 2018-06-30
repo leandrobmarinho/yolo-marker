@@ -10,7 +10,9 @@ parser.add_argument("-v", "--verbose", action="store_true",
 args = parser.parse_args()
 
 if args.path:
-	files = glob.glob(os.path.join(args.path, '*.jpg'))
+	# files = glob.glob(os.path.join(args.path, '*.jpg'))
+	files = glob.glob(args.path)
+
 	np.random.shuffle(files)
 
 	ptrain = 0.95
