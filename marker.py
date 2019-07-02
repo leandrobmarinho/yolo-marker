@@ -187,7 +187,7 @@ if __name__ == '__main__':
     MAX_HEIGHT = args['dimension'][1]
 
     # Image path list
-    files = glob.glob(args['path'])
+    files = sorted(glob.glob(args['path']))
     NUM_IMGS = len(files)
 
     if not NUM_IMGS:
