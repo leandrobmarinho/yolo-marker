@@ -21,8 +21,8 @@ virtualenv .env -p python3 --no-site-packages
 pip install -r requirements.txt
 
 ### Run the application
-python3 marker.py -p \"PATH_WITH_IMGS/*EXTENSION\" -d WIDTH HEIGHT\
-Eg.:  python3 marker.py -p \"/Users/leandrobmarinho/img/\*.png\" -d 1920 1080
+python3 marker.py -p \"PATH_WITH_IMGS/*EXTENSION\" -d WIDTH HEIGHT -n BOOLEAN\
+Eg.:  python3 marker.py -p \"/Users/leandrobmarinho/img/\*.png\" -d 1920 1080 -n False
 
 #### If you are done working in the virtual environment for the moment, you can deactivate it:
 deactivate
