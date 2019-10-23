@@ -1,6 +1,6 @@
 ## Yolo marker
 
-![](screen.png?raw=true)
+![screenshot](https://user-images.githubusercontent.com/19287934/67440616-3e601e00-f5d0-11e9-9804-7780635fbd51.png)
 
 ### Install virtualenv via pip:
 pip install virtualenv
