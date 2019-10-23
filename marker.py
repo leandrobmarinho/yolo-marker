@@ -293,14 +293,15 @@ if __name__ == '__main__':
 
             if file_pos + 1 < NUM_IMGS:
                 file_pos = file_pos + 1
-
                 image = read_img(files[file_pos])
                 read_markers(files[file_pos], image.shape)
 
         if key == ord("b"):
+            save_regions(files[file_pos], regions, image.shape)
+            regions = list()
+
             if file_pos > 0:
                 file_pos = file_pos - 1
-
                 image = read_img(files[file_pos])
                 read_markers(files[file_pos], image.shape)
 
