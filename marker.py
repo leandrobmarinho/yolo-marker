@@ -1,5 +1,6 @@
 # import the necessary packages
 import cv2, glob, os, argparse, math
+from natsort import natsorted
 
 # initialize the list of reference points and boolean indicating
 # whether cropping is being performed or not
@@ -211,7 +212,7 @@ if __name__ == '__main__':
     if args['numbers'] is True:
         files = sorted(glob.glob(args['path']), key = lambda x: int(x[args['path'].find('*'):x.find('.')]))
     else:
-        files = sorted(glob.glob(args['path']))
+        files = natsorted(glob.glob(args['path']))
 
     NUM_IMGS = len(files)
 
