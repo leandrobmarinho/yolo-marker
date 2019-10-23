@@ -180,6 +180,28 @@ def click_and_crop(event, x, y, flags, param):
     elif event == cv2.EVENT_MOUSEMOVE:
         print_cross_cursor(x, y)
 
+    # undo last region (last reset)
+    elif event == cv2.EVENT_RBUTTONDOWN:
+        image = read_img(files[file_pos])
+        draw_info(image)
+
+        print('Cleaning last region (with mouse)')
+        regions.pop(-1)
+
+        filename, file_extension = os.path.splitext(files[file_pos])
+        file_path = files[file_pos].replace(file_extension, ".txt")
+        # file_path = files[file_pos].replace("jpg", "txt")
+
+        if os.path.isfile(file_path):
+            os.remove(file_path)
+
+        for region in regions:
+            class_type = region['class']
+            region = region['region']
+            # draw a rectangle around the region of interest
+            cv2.rectangle(image, region[0], region[1], class_colours[class_type], 2)
+            cv2.imshow("image", image)
+
 
 
 
@@ -288,6 +310,7 @@ if __name__ == '__main__':
 
             print_regions()
         
+        # if the 'l' key is pressed, reset the last cropping region
         if key == ord("l"):
             
             image = read_img(files[file_pos])
@@ -304,7 +327,7 @@ if __name__ == '__main__':
             print_regions()
 
         # if the 'q' key is pressed, break from the loop
-        elif key == ord("q"):
+        if key == ord("q"):
             break
 
 
