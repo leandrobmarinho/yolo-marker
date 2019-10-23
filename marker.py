@@ -267,6 +267,21 @@ if __name__ == '__main__':
                 os.remove(file_path)
 
             print_regions()
+        
+        if key == ord("l"):
+            
+            image = read_img(files[file_pos])
+            print('Cleaning last region')
+            regions.pop(-1)
+
+            filename, file_extension = os.path.splitext(files[file_pos])
+            file_path = files[file_pos].replace(file_extension, ".txt")
+            # file_path = files[file_pos].replace("jpg", "txt")
+
+            if os.path.isfile(file_path):
+                os.remove(file_path)
+
+            print_regions()
 
         # if the 'q' key is pressed, break from the loop
         elif key == ord("q"):
