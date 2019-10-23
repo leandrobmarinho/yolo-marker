@@ -202,18 +202,13 @@ if __name__ == '__main__':
     ap = argparse.ArgumentParser()
     ap.add_argument("-p", "--path", required=True, help="Path to the image.", type=str)
     ap.add_argument('-d', '--dimension', required=True, nargs=2, help='Max width and height to show the image.', type=int)
-    ap.add_argument('-n', '--numbers', required=False, default=False, help="Name of images are numbers (True) or not (False). Default is False.", type=bool)
     args = vars(ap.parse_args())
 
     MAX_WIDTH = args['dimension'][0]
     MAX_HEIGHT = args['dimension'][1]
 
     # Image path list
-    if args['numbers'] is True:
-        files = sorted(glob.glob(args['path']), key = lambda x: int(x[args['path'].find('*'):x.find('.')]))
-    else:
-        files = natsorted(glob.glob(args['path']))
-
+    files = natsorted(glob.glob(args['path']))
     NUM_IMGS = len(files)
 
     if not NUM_IMGS:
