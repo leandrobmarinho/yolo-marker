@@ -8,7 +8,6 @@ refPt = []
 cropping = False
 class_selected = 0
 regions = list()
-originalImage = None
 file_pos = 0
 NUM_IMGS = 0
 MAX_WIDTH = 1280
@@ -43,7 +42,8 @@ def draw_info(image):
     cv2.putText(image,'B (back)',(10, pos_y+40), font, 0.5, (255, 255, 255),1, cv2.LINE_8)
     cv2.putText(image, 'N (next|save)', (10, pos_y + 55), font, 0.5, (255, 255, 255), 1, cv2.LINE_8)
     cv2.putText(image, 'R (reset)', (10, pos_y + 70), font, 0.5, (255, 255, 255), 1, cv2.LINE_8)
-    cv2.putText(image, 'Q (quit)', (10, pos_y + 85), font, 0.5, (255, 255, 255), 1, cv2.LINE_8)
+    cv2.putText(image, 'L (last reset)', (10, pos_y + 85), font, 0.5, (255, 255, 255), 1, cv2.LINE_8)
+    cv2.putText(image, 'Q (quit)', (10, pos_y + 100), font, 0.5, (255, 255, 255), 1, cv2.LINE_8)
 
 def save_regions(image_path, regions, dimensions):
     # Replace jpg path to read txt file
@@ -218,7 +218,6 @@ if __name__ == '__main__':
     # Read the first image and its markers
     image = read_img(files[file_pos])
     read_markers(files[file_pos], image.shape)
-    originalImage = image
 
     # keep looping until the 'q' key is pressed
     while True:
