@@ -7,6 +7,7 @@ refPt = []
 cropping = False
 class_selected = 0
 regions = list()
+originalImage = None
 file_pos = 0
 NUM_IMGS = 0
 MAX_WIDTH = 1280
@@ -135,7 +136,7 @@ def read_img(file_path):
 
 def click_and_crop(event, x, y, flags, param):
     # grab references to the global variables
-    global refPt, cropping
+    global refPt, refPtAux, cropping
 
     # if the left mouse button was clicked, record the starting
     # (x, y) coordinates and indicate that cropping is being
@@ -143,6 +144,11 @@ def click_and_crop(event, x, y, flags, param):
     if event == cv2.EVENT_LBUTTONDOWN:
         refPt = [(x, y)]
         cropping = True
+
+        element = dict()
+        element['region'] = [refPt[0], refPt[0]]
+        element['class'] = class_selected
+        regions.append(element)
 
     # check to see if the left mouse button was released
     elif event == cv2.EVENT_LBUTTONUP:
@@ -154,13 +160,24 @@ def click_and_crop(event, x, y, flags, param):
         element = dict()
         element['region'] = [refPt[0], refPt[1]]
         element['class'] = class_selected
-        regions.append(element)
+        regions[-1] = element
 
         print_regions()
 
+    # check if the mouse is dragging a region
+    elif event == cv2.EVENT_MOUSEMOVE and cropping == True:
+        refPtAux = (x, y)
+
+        element = dict()
+        element['region'] = [refPt[0], refPtAux]
+        element['class'] = class_selected
+        regions[-1] = element
+
+        print_regions(drag=True)
 
 
-def print_regions():
+
+def print_regions(drag=False):
     cv2.imshow("image", image)
 
     for region in regions:
@@ -168,10 +185,13 @@ def print_regions():
         region = region['region']
 
         # draw a rectangle around the region of interest
-        cv2.rectangle(image, region[0], region[1], class_colours[class_type], 2)
-        cv2.imshow("image", image)
-
-
+        if drag==True:
+            aux = image.copy()
+            cv2.rectangle(aux, region[0], region[1], class_colours[class_type], 2)
+            cv2.imshow("image", aux)
+        else:
+            cv2.rectangle(image, region[0], region[1], class_colours[class_type], 2)
+            cv2.imshow("image", image)
 
 
 
@@ -202,6 +222,7 @@ if __name__ == '__main__':
     # Read the first image and its markers
     image = read_img(files[file_pos])
     read_markers(files[file_pos], image.shape)
+    originalImage = image
 
     # keep looping until the 'q' key is pressed
     while True:
@@ -237,7 +258,7 @@ if __name__ == '__main__':
 
         # if the 'r' key is pressed, reset the cropping region
         if key == ord("r"):
-
+            
             image = read_img(files[file_pos])
             print('Cleaning regions')
             regions = list()
