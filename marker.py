@@ -176,6 +176,27 @@ def click_and_crop(event, x, y, flags, param):
 
         print_regions(drag=True)
 
+    # add a cross cursor when drag freely
+    elif event == cv2.EVENT_MOUSEMOVE:
+        print_cross_cursor(x, y)
+
+
+
+
+def print_cross_cursor(x, y):
+    aux = image.copy()
+
+    startPH = (x,0)
+    endPH = (x,aux.shape[0])
+    startPV = (0,y)
+    endPV = (aux.shape[1],y)
+
+    cv2.line(aux, startPH, endPH, class_colours[class_selected], 2)
+    cv2.line(aux, startPV, endPV, class_colours[class_selected], 2)
+
+    cv2.imshow("image", aux)
+
+
 
 
 def print_regions(drag=False):
