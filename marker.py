@@ -200,6 +200,9 @@ def click_and_crop(event, x, y, flags, param):
                 class_type = region['class']
                 region = region['region']
                 # draw a rectangle around the region of interest
+                x_a = min(region[0][0],region[1][0])
+                y_a = min(region[0][1],region[1][1]) - 5
+                cv2.putText(image, str(class_type), (x_a, y_a), cv2.FONT_HERSHEY_SIMPLEX, 1, class_colours[class_type], 2, cv2.LINE_AA)
                 cv2.rectangle(image, region[0], region[1], class_colours[class_type], 2)
                 cv2.imshow("image", image)
 
@@ -232,9 +235,15 @@ def print_regions(drag=False):
         # draw a rectangle around the region of interest
         if drag==True:
             aux = image.copy()
+            x_a = min(region[0][0],region[1][0])
+            y_a = min(region[0][1],region[1][1]) - 5
+            cv2.putText(aux, str(class_type), (x_a, y_a), cv2.FONT_HERSHEY_SIMPLEX, 1, class_colours[class_type], 2, cv2.LINE_AA)
             cv2.rectangle(aux, region[0], region[1], class_colours[class_type], 2)
             cv2.imshow("image", aux)
         else:
+            x_a = min(region[0][0],region[1][0])
+            y_a = min(region[0][1],region[1][1]) - 5
+            cv2.putText(image, str(class_type), (x_a, y_a), cv2.FONT_HERSHEY_SIMPLEX, 1, class_colours[class_type], 2, cv2.LINE_AA)
             cv2.rectangle(image, region[0], region[1], class_colours[class_type], 2)
             cv2.imshow("image", image)
 
