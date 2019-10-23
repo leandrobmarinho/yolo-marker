@@ -137,7 +137,7 @@ def read_img(file_path):
 
 def click_and_crop(event, x, y, flags, param):
     # grab references to the global variables
-    global refPt, refPtAux, cropping
+    global refPt, refPtAux, cropping, image
 
     # if the left mouse button was clicked, record the starting
     # (x, y) coordinates and indicate that cropping is being
