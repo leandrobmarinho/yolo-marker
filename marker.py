@@ -40,7 +40,7 @@ def draw_info(image):
     cv2.putText(image,'{} of {}'.format(file_pos+1, NUM_IMGS),(10,pos_y+25), font, 0.5, (255, 255, 255),1, cv2.LINE_8)
 
     cv2.putText(image,'B (back)',(10, pos_y+40), font, 0.5, (255, 255, 255),1, cv2.LINE_8)
-    cv2.putText(image, 'N (next|save)', (10, pos_y + 55), font, 0.5, (255, 255, 255), 1, cv2.LINE_8)
+    cv2.putText(image, 'N (next)', (10, pos_y + 55), font, 0.5, (255, 255, 255), 1, cv2.LINE_8)
     cv2.putText(image, 'R (reset)', (10, pos_y + 70), font, 0.5, (255, 255, 255), 1, cv2.LINE_8)
     cv2.putText(image, 'L (last reset)', (10, pos_y + 85), font, 0.5, (255, 255, 255), 1, cv2.LINE_8)
     cv2.putText(image, 'Q (quit)', (10, pos_y + 100), font, 0.5, (255, 255, 255), 1, cv2.LINE_8)
