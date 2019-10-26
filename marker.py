@@ -4,6 +4,7 @@ from natsort import natsorted
 
 # initialize the list of reference points and boolean indicating
 # whether cropping is being performed or not
+cursorPt = (-1, -1)
 refPt = []
 cropping = False
 class_selected = 0
@@ -43,7 +44,8 @@ def draw_info(image):
     cv2.putText(image, 'N (next)', (10, pos_y + 55), font, 0.5, (255, 255, 255), 1, cv2.LINE_8)
     cv2.putText(image, 'R (reset)', (10, pos_y + 70), font, 0.5, (255, 255, 255), 1, cv2.LINE_8)
     cv2.putText(image, 'L (last reset)', (10, pos_y + 85), font, 0.5, (255, 255, 255), 1, cv2.LINE_8)
-    cv2.putText(image, 'Q (quit)', (10, pos_y + 100), font, 0.5, (255, 255, 255), 1, cv2.LINE_8)
+    cv2.putText(image, 'C (cursor reset)', (10, pos_y + 100), font, 0.5, (255, 255, 255), 1, cv2.LINE_8)
+    cv2.putText(image, 'Q (quit)', (10, pos_y + 115), font, 0.5, (255, 255, 255), 1, cv2.LINE_8)
 
 def save_regions(image_path, regions, dimensions):
     # Replace jpg path to read txt file
@@ -137,7 +139,7 @@ def read_img(file_path):
 
 def click_and_crop(event, x, y, flags, param):
     # grab references to the global variables
-    global refPt, refPtAux, cropping, image
+    global cursorPt, refPt, refPtAux, cropping, image
 
     # if the left mouse button was clicked, record the starting
     # (x, y) coordinates and indicate that cropping is being
@@ -178,6 +180,7 @@ def click_and_crop(event, x, y, flags, param):
 
     # add a cross cursor when drag freely
     elif event == cv2.EVENT_MOUSEMOVE:
+        cursorPt = (x, y)
         print_cross_cursor(x, y)
 
     # undo last region (last reset)
@@ -305,10 +308,10 @@ if __name__ == '__main__':
                 image = read_img(files[file_pos])
                 read_markers(files[file_pos], image.shape)
 
-        # if the 'r' key is pressed, reset the cropping region
+        # if the 'r' key is pressed, reset all cropping regions
         if key == ord("r"):
-            
             image = read_img(files[file_pos])
+
             print('Cleaning regions')
             regions = list()
 
@@ -325,8 +328,33 @@ if __name__ == '__main__':
         if key == ord("l"):
             if len(regions) > 0:
                 image = read_img(files[file_pos])
+
                 print('Cleaning last region')
                 regions.pop(-1)
+
+                filename, file_extension = os.path.splitext(files[file_pos])
+                file_path = files[file_pos].replace(file_extension, ".txt")
+                # file_path = files[file_pos].replace("jpg", "txt")
+                
+                if os.path.isfile(file_path):
+                    os.remove(file_path)
+
+                print_regions()
+
+        # if the 'c' key is pressed, reset the cursor cropping regions
+        if key == ord("c"):
+            if len(regions) > 0:
+                image = read_img(files[file_pos])
+
+                print('Cleaning cursor region')
+                x_c,y_c = cursorPt
+                cursorRegions = []
+                for region in regions:
+                    reg = region['region']
+                    if(x_c > min(reg[0][0],reg[1][0]) and x_c < max(reg[0][0],reg[1][0]) and 
+                       y_c > min(reg[0][1],reg[1][1]) and y_c < max(reg[0][1],reg[1][1])):
+                        cursorRegions.append(region)
+                regions = [x for x in regions if x not in cursorRegions]
 
                 filename, file_extension = os.path.splitext(files[file_pos])
                 file_path = files[file_pos].replace(file_extension, ".txt")
