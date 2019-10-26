@@ -167,6 +167,9 @@ def click_and_crop(event, x, y, flags, param):
 
         print_regions()
 
+        if len(regions) > 0:
+            save_regions(files[file_pos], regions, image.shape)
+
     # check if the mouse is dragging a region
     elif event == cv2.EVENT_MOUSEMOVE and cropping == True:
         refPtAux = (x, y)
@@ -208,6 +211,9 @@ def click_and_crop(event, x, y, flags, param):
                 cv2.putText(image, str(class_type), (x_a, y_a), cv2.FONT_HERSHEY_SIMPLEX, 1, class_colours[class_type], 2, cv2.LINE_AA)
                 cv2.rectangle(image, region[0], region[1], class_colours[class_type], 2)
                 cv2.imshow("image", image)
+            
+            if len(regions) > 0:
+                save_regions(files[file_pos], regions, image.shape)
 
 
 
@@ -341,6 +347,9 @@ if __name__ == '__main__':
 
                 print_regions()
 
+                if len(regions) > 0:
+                    save_regions(files[file_pos], regions, image.shape)
+
         # if the 'c' key is pressed, reset the cursor cropping regions
         if key == ord("c"):
             if len(regions) > 0:
@@ -364,6 +373,9 @@ if __name__ == '__main__':
                     os.remove(file_path)
 
                 print_regions()
+
+                if len(regions) > 0:
+                    save_regions(files[file_pos], regions, image.shape)
 
         # if the 'q' key is pressed, break from the loop
         if key == ord("q"):
