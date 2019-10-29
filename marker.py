@@ -54,7 +54,7 @@ def save_regions(image_path, regions, dimensions):
 
     file_path = image_path.replace(file_extension, ".txt")
 
-    weight_img = dimensions[1]
+    width_img = dimensions[1]
     height_img = dimensions[0]
 
     if regions:
@@ -62,17 +62,17 @@ def save_regions(image_path, regions, dimensions):
         file = open(file_path, 'w')
         for region in regions:
 
-            weight = region['region'][1][0] - region['region'][0][0]
+            width = region['region'][1][0] - region['region'][0][0]
             height = region['region'][1][1] - region['region'][0][1]
-            Yolo_x = (region['region'][0][0] + (weight/2)) / weight_img
+            Yolo_x = (region['region'][0][0] + (width/2)) / width_img
             Yolo_y = (region['region'][0][1] + (height/2)) / height_img
-            Yolo_weight = abs(weight / weight_img)
+            Yolo_width = abs(width / width_img)
             Yolo_height = abs(height / height_img)
 
-            print('{} {:6f} {:6f} {:6f} {:6f}'.format(region['class'], Yolo_x, Yolo_y, Yolo_weight, Yolo_height))
-            # print('<{} {} {} {} {}>'.format(region['class'], (region['region'][0][0] + (weight/2)), (region['region'][0][1] + (height/2)), weight, height))
+            print('{} {:6f} {:6f} {:6f} {:6f}'.format(region['class'], Yolo_x, Yolo_y, Yolo_width, Yolo_height))
+            # print('<{} {} {} {} {}>'.format(region['class'], (region['region'][0][0] + (width/2)), (region['region'][0][1] + (height/2)), width, height))
 
-            file.write('{} {:6f} {:6f} {:6f} {:6f}\n'.format(region['class'], Yolo_x, Yolo_y, Yolo_weight, Yolo_height))
+            file.write('{} {:6f} {:6f} {:6f} {:6f}\n'.format(region['class'], Yolo_x, Yolo_y, Yolo_width, Yolo_height))
 
         file.close()
 
@@ -88,7 +88,7 @@ def read_markers(image_path, dimensions):
     if os.path.isfile(file_path):
         regions = list()
 
-        weight_img = dimensions[1]
+        width_img = dimensions[1]
         height_img = dimensions[0]
 
         file = open(file_path, "r")
@@ -98,14 +98,14 @@ def read_markers(image_path, dimensions):
             line = line.split(' ')
             # print(line)
 
-            x = round(float(line[1]) * weight_img) # centroid
+            x = round(float(line[1]) * width_img) # centroid
             y = round(float(line[2]) * height_img) # centroid
-            weight = round(float(line[3]) * weight_img)
+            width = round(float(line[3]) * width_img)
             height = round(float(line[4]) * height_img)
             Yolo_class = int(line[0])
 
             element = dict()
-            element['region'] = [(round(x-(weight/2)), round(y-(height/2))), (round(x + (weight/2)), round(y + (height/2)))]
+            element['region'] = [(round(x-(width/2)), round(y-(height/2))), (round(x + (width/2)), round(y + (height/2)))]
             element['class'] = Yolo_class
             regions.append(element)
 
