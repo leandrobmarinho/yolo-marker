@@ -1,5 +1,7 @@
 # import the necessary packages
 import cv2, glob, os, argparse, math
+
+from random import randint
 from natsort import natsorted
 
 # initialize the list of reference points and boolean indicating
@@ -14,17 +16,23 @@ NUM_IMGS = 0
 MAX_WIDTH = 1280
 MAX_HEIGHT = 800
 
-class_colours = [(58,36,170), (218,135,9), (166,206,227), (31,120,180), (178,223,138), (51,160,44), (251,154,153), (227,26,28), (253,191,111),
-                 (255,127,0)]
-#, (202,178,214), (106,61,154)
 
-# class_colours = [(141,211,199), (255,255,179), (190,186,218), (251,128,114), (128,177,211), (253,180,98), (179,222,105),
-#                  (252,205,229), (217,217,217), (188,128,189)]
-# class_colours.reverse() # I prefer that start from end :p
+'''---------------------------------------------------------------------------------------------------------'''
+# Lê um arquivo de texto com as classes em cada linha do arquivo para imprimir na tela de marcação
+class_colours = []
+list_class    = []
 
-# class_colours = [(58,36,170), (40,65,95), (207,207,234), (183,117,117), (160,219,142), (192,214,228), (255,192,203), (210,221,205),
-#                  (255, 253, 199), (218,135,9)]
+f = open('classes.txt', 'r')
+for i, line in enumerate(f):
+    line = line.rstrip() 
+    list_class.append(line)
+f.close()
 
+len_lista = len(list_class)
+
+for i in range(len_lista):
+    class_colours.append((randint(50, 255), randint(70, 255), randint(90, 255)))
+'''---------------------------------------------------------------------------------------------------------'''
 
 def draw_info(image):
 
@@ -34,7 +42,7 @@ def draw_info(image):
 
     pos_y = 40
     for i in range(0, len(class_colours)):
-        cv2.putText(image, 'Class {}'.format(i), (10, pos_y), font, 0.5, class_colours[i], 1, cv2.LINE_4)
+        cv2.putText(image, '{} - {}'.format(i, list_class[i]), (10, pos_y), font, 0.5, class_colours[i], 1, cv2.LINE_4)
         pos_y = pos_y + 15
 
     cv2.rectangle(image, (7,pos_y+13), (95,pos_y+30), (138, 136, 142), cv2.FILLED)
