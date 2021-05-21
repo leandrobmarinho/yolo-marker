@@ -19,7 +19,7 @@ last_region = None
 
 '''---------------------------------------------------------------------------------------------------------'''
 # Lê um arquivo de texto com as classes em cada linha do arquivo para imprimir na tela de marcação
-class_colours = []
+# class_colours = []
 list_class    = []
 
 f = open('classes.txt', 'r')
@@ -29,9 +29,21 @@ for i, line in enumerate(f):
 f.close()
 
 len_lista = len(list_class)
+print(len_lista)
 
-for i in range(len_lista):
-    class_colours.append((randint(50, 255), randint(70, 255), randint(90, 255)))
+class_colours = [(166,206,227),
+                 (31,120,180),
+                 (178,223,138),
+                 (51,160,44),
+                 (251,154,153),
+                 (227,26,28),
+                 (253,191,111),
+                 (255,127,0),
+                 (202,178,214),
+                 (106,61,154)]
+if len_lista > 10:
+    for i in range(len_lista-10):
+        class_colours.append((randint(50, 255), randint(70, 255), randint(90, 255)))
 '''---------------------------------------------------------------------------------------------------------'''
 
 def draw_info(image):
@@ -41,20 +53,20 @@ def draw_info(image):
     cv2.putText(image,'Selected: {}'.format(class_selected),(10,20), font, 0.5, class_colours[class_selected],1, cv2.LINE_AA)
 
     pos_y = 40
-    for i in range(0, len(class_colours)):
-        cv2.putText(image, '{} - {}'.format(i, list_class[i]), (10, pos_y), font, 0.5, class_colours[i], 1, cv2.LINE_4)
-        pos_y = pos_y + 15
+    for i in range(0, len(list_class)):
+        cv2.putText(image, '{} - {}'.format(i, list_class[i]), (10, pos_y), font, 0.5, class_colours[i], 2, cv2.LINE_4)
+        pos_y = pos_y + 20
 
     cv2.rectangle(image, (7,pos_y+13), (95,pos_y+30), (138, 136, 142), cv2.FILLED)
     cv2.putText(image,'{} of {}'.format(file_pos+1, NUM_IMGS),(10,pos_y+25), font, 0.5, (255, 255, 255),1, cv2.LINE_8)
     print('{} of {}'.format(file_pos+1, NUM_IMGS))
 
-    cv2.putText(image,'B (back)',(10, pos_y+40), font, 0.5, (255, 255, 255),1, cv2.LINE_8)
-    cv2.putText(image, 'N (next)', (10, pos_y + 55), font, 0.5, (255, 255, 255), 1, cv2.LINE_8)
-    cv2.putText(image, 'R (reset)', (10, pos_y + 70), font, 0.5, (255, 255, 255), 1, cv2.LINE_8)
-    cv2.putText(image, 'L (last reset)', (10, pos_y + 85), font, 0.5, (255, 255, 255), 1, cv2.LINE_8)
-    cv2.putText(image, 'C (cursor reset)', (10, pos_y + 100), font, 0.5, (255, 255, 255), 1, cv2.LINE_8)
-    cv2.putText(image, 'Q (quit)', (10, pos_y + 115), font, 0.5, (255, 255, 255), 1, cv2.LINE_8)
+    cv2.putText(image,'B (back)',(10, pos_y+45), font, 0.5, (255, 255, 255),1, cv2.LINE_8)
+    cv2.putText(image, 'N (next)', (10, pos_y + 60), font, 0.5, (255, 255, 255), 1, cv2.LINE_8)
+    cv2.putText(image, 'R (reset)', (10, pos_y + 75), font, 0.5, (255, 255, 255), 1, cv2.LINE_8)
+    cv2.putText(image, 'L (last reset)', (10, pos_y + 90), font, 0.5, (255, 255, 255), 1, cv2.LINE_8)
+    cv2.putText(image, 'C (cursor reset)', (10, pos_y + 105), font, 0.5, (255, 255, 255), 1, cv2.LINE_8)
+    cv2.putText(image, 'Q (quit)', (10, pos_y + 120), font, 0.5, (255, 255, 255), 1, cv2.LINE_8)
 
 def save_regions(image_path, regions, dimensions):
     global last_region
