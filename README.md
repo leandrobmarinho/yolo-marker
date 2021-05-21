@@ -50,3 +50,15 @@ Eg1.: python write_img_names_2.py -p \"/Users/leandrobmarinho/img/\*.png\" -ptra
 ## marker_change_class.py
 
 This file is different from the markey.py file. The difference consists on the permission of changing a class after marking the bounding box. To change the class, you should place the mouse cursor inside the bounding box, then press the number representing the class. However, if you are marking the images, you should be attentive to change the class outside the of the existing bounding boxes. The marker_change_class.py file is useful, mainly, on the reviewing process.
+
+## marker_characters.py
+
+All characters can be chosen as object classes, in addition to numbers. Image manipulations are now:
+
+**\+** &#8594; next image
+
+**\-** &#8594; previous image
+
+**\/** &#8594; reset the cropping region
+
+**\*** &#8594; exit
